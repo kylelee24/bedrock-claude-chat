@@ -24,9 +24,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectBaseDir: "."
           args: >
             -Dsonar.organization=${{ env.SONAR_CLOUD_ORGANIZATION }}
             -Dsonar.projectKey=${{ env.SONAR_CLOUD_PROJECT_KEY }}
             -Dsonar.log.level=${{ env.SONAR_CLOUD_LOG_LEVEL }}
             -Dsonar.qualitygate.wait=${{ env.SONAR_CLOUD_QUALITY_GATE_WAIT }}
+            -Dsonar.projectBaseDir="."
