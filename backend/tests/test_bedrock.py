@@ -10,6 +10,7 @@ from app.routes.schemas.conversation import type_model_name
 
 MODEL: type_model_name = "claude-v3-sonnet"
 
+adsfdasfsdafds
 
 class TestBedrock(unittest.TestCase):
     def test_calculate_query_embedding(self):

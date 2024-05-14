@@ -1,0 +1,68 @@
+############################################
+# TEMPLATE - SonarCloud Scan
+############################################
+
+name: Test API
+
+on:
+  workflow_call:
+    inputs:
+      enabled:
+        default: true
+        required: false
+        type: boolean
+      runsOn:
+        default: 'ubuntu-latest'
+        required: false
+        type: string
+      organization: 
+        required: true
+        type: string
+      projectKey:
+        required: true
+        type: string
+      logLevel:
+        default: 'INFO'
+        required: false
+        type: string
+      failOnError:
+        default: true
+        required: false
+        type: boolean
+      tests:
+        default: './backend/tests'
+        required: false
+        type: string
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        if: ${{ inputs.tests == '' }}
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=${{ inputs.organization }}
+            -Dsonar.projectKey=${{ inputs.projectKey }}
+            -Dsonar.log.level=${{ inputs.logLevel }}
+            -Dsonar.qualitygate.wait=${{ inputs.failOnError }}
+      - name: SonarCloud Scan (with tests folder defined)
+        if: ${{ inputs.tests != '' }}
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=${{ inputs.organization }}
+            -Dsonar.projectKey=${{ inputs.projectKey }}
+            -Dsonar.log.level=${{ inputs.logLevel }}
+            -Dsonar.qualitygate.wait=${{ inputs.failOnError }}
+            -Dsonar.tests=${{ inputs.tests }}
