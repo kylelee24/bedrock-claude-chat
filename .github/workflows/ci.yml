@@ -1,15 +1,7 @@
 on:
   push:
-    # paths:
-    #   - 'backend/**'
-    #   - 'frontend/**'
-name: Static code analysis
 
-env:
-  SONAR_CLOUD_ORGANIZATION: kylelee24
-  SONAR_CLOUD_PROJECT_KEY: kylelee24_bedrock-claude-chat
-  SONAR_CLOUD_LOG_LEVEL: INFO
-  SONAR_CLOUD_QUALITY_GATE_WAIT: true
+name: Static code analysis
 
 jobs:
   sonarcloud:
@@ -22,26 +14,3 @@ jobs:
       projectKey: kylelee24_bedrock-claude-chat
       logLevel: INFO
       failOnError: true
-      # organization: ${{ env.SONAR_CLOUD_ORGANIZATION }}
-      # projectKey: ${{ env.SONAR_CLOUD_PROJECT_KEY }}
-      # logLevel: ${{ env.SONAR_CLOUD_LOG_LEVEL }}
-      # failOnError: ${{ env.SONAR_CLOUD_QUALITY_GATE_WAIT }}
-
-  # sonarcloud:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-  #     - name: SonarCloud Scan
-  #       uses: sonarsource/sonarcloud-github-action@master
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  #       with:
-  #         args: >
-  #           -Dsonar.organization=${{ env.SONAR_CLOUD_ORGANIZATION }}
-  #           -Dsonar.projectKey=${{ env.SONAR_CLOUD_PROJECT_KEY }}
-  #           -Dsonar.log.level=${{ env.SONAR_CLOUD_LOG_LEVEL }}
-  #           -Dsonar.qualitygate.wait=${{ env.SONAR_CLOUD_QUALITY_GATE_WAIT }}
-  #           -Dsonar.tests=./backend/tests
