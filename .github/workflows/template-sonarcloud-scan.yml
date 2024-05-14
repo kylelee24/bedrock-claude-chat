@@ -30,7 +30,7 @@ on:
         required: false
         type: boolean
       tests:
-        default: ''
+        default: './backend/tests'
         required: false
         type: string
 
