@@ -31,10 +31,10 @@ on:
         type: boolean
       # TODO: tests with conditional to only run if paths are set
       # -Dsonar.tests=./backend/tests
-      # tests:
-      #   default: './backend/tests'
-      #   required: false
-      #   type: string
+      tests:
+        default: './backend/tests'
+        required: false
+        type: string
 
 jobs:
   sonarcloud:
@@ -44,6 +44,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: SonarCloud Scan
+        if: ${{ inputs.tests == '' }}
         uses: sonarsource/sonarcloud-github-action@master
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -54,3 +55,16 @@ jobs:
             -Dsonar.projectKey=${{ inputs.projectKey }}
             -Dsonar.log.level=${{ inputs.logLevel }}
             -Dsonar.qualitygate.wait=${{ inputs.failOnError }}
+      - name: SonarCloud Scan
+        if: ${{ inputs.tests != '' }}
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=${{ inputs.organization }}
+            -Dsonar.projectKey=${{ inputs.projectKey }}
+            -Dsonar.log.level=${{ inputs.logLevel }}
+            -Dsonar.qualitygate.wait=${{ inputs.failOnError }}
+            -Dsonar.tests=${{ inputs.tests }}
