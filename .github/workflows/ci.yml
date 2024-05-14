@@ -30,4 +30,5 @@ jobs:
             -Dsonar.projectKey=${{ env.SONAR_CLOUD_PROJECT_KEY }}
             -Dsonar.log.level=${{ env.SONAR_CLOUD_LOG_LEVEL }}
             -Dsonar.qualitygate.wait=${{ env.SONAR_CLOUD_QUALITY_GATE_WAIT }}
+            -Dsonar.projectBaseDir=${{ github.workspace }}
             -Dsonar.tests=${{ github.workspace }}/backend/tests
